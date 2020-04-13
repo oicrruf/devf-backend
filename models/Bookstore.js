@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BookstoresSchema = new mongoose.Schema({
+const BookstoreSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -18,6 +18,6 @@ const BookstoresSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-const Bookstores = mongoose.model('Bookstores', BookstoresSchema);
+const Bookstore = mongoose.model('Bookstore', BookstoreSchema);
 
-module.exports = Bookstores;
+module.exports = Bookstore;

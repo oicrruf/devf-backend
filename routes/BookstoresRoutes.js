@@ -1,40 +1,39 @@
 var express = require('express');
 var router = express.Router();
 
-const Library = require('../models/Library');
+const Bookstore = require('../models/Bookstore');
 
-// CRUD Articulos
 router.post('/bookstores', (req, res) => {
-  Library.create(req.body)
-    .then(library => res.status(201).json(library))
+  Bookstore.create(req.body)
+    .then(bookstore => res.status(201).json(bookstore))
     .catch(err => res.status(400).json(err));
 });
 
-// router.get('/articulos', (req, res) => {
-//   Articulo.find()
-//     .then(articulos => {
-//       if (articulos.length === 0) res.status(200).json({ mensaje: 'No hay articulos' });
-//       res.status(200).json(articulos);
-//     })
-//     .catch(err => res.status(400).json(err));
-// });
+router.get('/bookstores', (req, res) => {
+  Bookstore.find()
+    .then(bookstore => {
+      if (bookstore.length === 0) res.status(200).json({ menssage: 'Not found Bookstores' });
+      res.status(200).json(bookstore);
+    })
+    .catch(err => res.status(400).json(err));
+});
 
-// router.get('/api/v1/articulos/:id', (req, res) => {
-//   Articulo.findById(req.params.id)
-//     .then(articulo => res.status(200).json(articulo))
-//     .catch(err => res.status(404).json(err));
-// });
+router.get('/bookstores/:id', (req, res) => {
+  Bookstore.findById(req.params.id)
+    .then(bookstores => res.status(200).json(bookstores))
+    .catch(err => res.status(404).json(err));
+});
 
-// router.patch('/api/v1/articulos/:id', (req, res) => {
-//   Articulo.findByIdAndUpdate(req.params.id, req.body, { new: true })
-//     .then(articulo => res.status(200).json(articulo))
-//     .catch(err => res.status(404).json(err));
-// });
+router.patch('/bookstores/:id', (req, res) => {
+  Bookstore.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then(bookstores => res.status(200).json(bookstores))
+    .catch(err => res.status(404).json(err));
+});
 
-// router.delete('/api/v1/articulos/:id', (req, res) => {
-//   Articulo.findByIdAndDelete(req.params.id)
-//     .then(() => res.status(204).json())
-//     .catch(err => res.status(404).json(err));
-// });
+router.delete('/bookstores/:id', (req, res) => {
+  Bookstore.findByIdAndDelete(req.params.id)
+    .then(() => res.status(204).json())
+    .catch(err => res.status(404).json(err));
+});
 
 module.exports = router;
