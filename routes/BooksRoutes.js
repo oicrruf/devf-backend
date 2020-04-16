@@ -13,13 +13,15 @@ router.get('/books/:name', (req, res, body) => {
                 let covers = [];
                 if (book.isbn) {
                     book.isbn.forEach(c => {
-                        covers.push(`http://covers.openlibrary.org/b/isbn/${c}-L.jpg`)
+                        covers.push({
+                            url: `http://covers.openlibrary.org/b/isbn/${c}-L.jpg`
+                        })
                     })
                 }
                 books.push({
-                    id: i+1,
+                    id: i + 1,
                     title: book.title,
-                    slug: Date.now()+i,
+                    slug: Date.now() + i,
                     unit: null,
                     author: {
                         id: String(book.author_key),
@@ -28,15 +30,17 @@ router.get('/books/:name', (req, res, body) => {
                         bio: null,
                         email: null,
                         website: null,
-                        socials: {
-                            id: null,
-                            media: null,
-                            profileLink: null
-                        }
+                        socials: [
+                            {
+                                id: null,
+                                media: null,
+                                profileLink: null
+                            },
+                        ]
                     },
                     meta: {
                         publisher: String(book.publisher ? book.publisher : null),
-                        isbn: book.isbn ? book.isbn : null,
+                        isbn: book.isbn ? String(book.isbn[0]) : null,
                         edition: book.publish_year ? parseInt(book.publish_year) : null,
                         country: null,
                         languages: book.language ? book.language : null,
@@ -51,7 +55,13 @@ router.get('/books/:name', (req, res, body) => {
                     type: 'book',
                     image: book.isbn ? `http://covers.openlibrary.org/b/isbn/${book.isbn[0]}-L.jpg` : cover,
                     gallery: book.isbn ? covers : null,
-                    categories: book.subject ? book.subject : null
+                    categories: [
+                        {
+                            id: i + 1,
+                            title: book.subject ? book.subject[0] : null,
+                            slug: Date.now() + i,
+                        }
+                    ]
                 })
             });
             res.send(books)
