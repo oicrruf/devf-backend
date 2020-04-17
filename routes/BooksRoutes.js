@@ -77,4 +77,15 @@ router.post('/books', (req, res) => {
         .then(book => res.status(201).json(book))
         .catch(err => res.status(400).json(err));
 });
+
+router.get('/books', (req, res) => {
+    Book.find()
+        .then(book => {
+            if (Book.length === 0) res.status(200).json({ menssage: 'Not found Bookstores' });
+            res.status(200).json(book);
+        })
+        .catch(err => res.status(400).json(err));
+});
+
+
 module.exports = router;
